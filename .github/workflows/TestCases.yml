@@ -5,7 +5,7 @@ name: TestCases
 on: push
 
 jobs:
-  build:
+  run-test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
