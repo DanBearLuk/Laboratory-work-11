@@ -50,22 +50,26 @@ async function sendMessage(user_id, message) {
 async function test() {
     await db.init();
 
-    console.log('TC1.1: ');
+    let e = false;
+
+    console.log('TC1.1 (user 123 exists; sendMessage(123, \'Hello, Dan!\') == 1): ');
     if (await sendMessage(123, 'Hello, Dan!') == 1) console.log('Passed');
-    else console.log('Failed');
+    else { console.log('Failed'); e = true }
 
-    console.log('TC1.2: ');
+    console.log('TC1.2 (none; sendMessage(-5, \'Hello, Dan!\') == -1): ');
     if (await sendMessage(-5, 'Hello, Dan!') == -1) console.log('Passed');
-    else console.log('Failed');
+    else { console.log('Failed'); e = true }
     
-    console.log('TC1.3: ');
+    console.log('TC1.3 (none; sendMessage(3, \'\') == -2): ');
     if (await sendMessage(3, '') == -2) console.log('Passed');
-    else console.log('Failed');
+    else { console.log('Failed'); e = true }
 
-    console.log('TC1.4: ');
+    console.log('TC1.4 (none; sendMessage(22, \'a\'.repeat(1500)) == -2): ');
     if (await sendMessage(22, 'a'.repeat(1500)) == -2) console.log('Passed');
-    else console.log('Failed');
+    else { console.log('Failed'); e = true }
+
+    if (e) process.exit(1);
+    else process.exit();
 }
 
 test();
-console.log('Test:\n');
